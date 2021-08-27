@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>URL Shortener</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+   </head>
+   <body>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for cate, msg in messages %}
+      <div class="alert alert-{{cate}}" role="alert">
+         {{msg}}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <div class="container">
+         <form action="/" method="POST" autocomplete="off">
+            <div class="mb-3">
+               {{form.csrf_token}}
+               <label class="form-label">Enter URL:</label>
+               <input type="url" class="form-control" placeholder="Enter URL here.." name="url" required>
+            </div>
+            {{form.submit(class_='btn btn-dark')}}
+         </form><br>
+         {% if shorted_urls %}
+         <h3>Links:</h3>
+         <ul class="list-group">
+            {% for each in shorted_urls %}
+            <li class="list-group-item"><a target="_blank" class="link-primary" href="{{each}}">{{each}}</a></li>
+            {% endfor %}
+         </ul>
+         {% endif %}
+      </div>
+   </body>
+</html>
