@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <meta charset="utf-8">
-      <title>URL Shortener</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-   </head>
-   <body>
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      {% for cate, msg in messages %}
-      <div class="alert alert-{{cate}}" role="alert">
-         {{msg}}
-      </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-      <div class="container">
-         <form action="/" method="POST" autocomplete="off">
-            <div class="mb-3">
-               {{form.csrf_token}}
-               <label class="form-label">Enter URL:</label>
-               <input type="url" class="form-control" placeholder="Enter URL here.." name="url" required>
-            </div>
-            {{form.submit(class_='btn btn-dark')}}
-         </form><br>
-         {% if shorted_urls %}
-         <h3>Links:</h3>
-         <ul class="list-group">
-            {% for each in shorted_urls %}
-            <li class="list-group-item"><a target="_blank" class="link-primary" href="{{each}}">{{each}}</a></li>
-            {% endfor %}
-         </ul>
-         {% endif %}
-      </div>
-   </body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>URL Shortener</title>
+	<style>:root{--border:#e1e1e1}body{margin:0;font:20px/1.5 Verdana,Helvetica,sans-serif}.container{width:50%;margin:0 auto}.title{text-align:center}.wrapper{display:flex;flex-direction:column;gap:10px;margin-top:25%}.input-group{display:flex;flex-direction:column-reverse}label{font-weight:600}.iput{padding:10px;outline:0;border:2px solid grey;border-radius:4px}.shrt{font-weight:600;font-size:16px;background:#d3d3d3}#subtitle{margin:0}.li-w{margin-top:10%;padding:0;list-style:none}.li-w > li{background:#d3d3d3;padding:5px;border:2px solid grey;border-radius:4px}@media(max-width:650px){.container{width:95%}}</style>
+</head>
+<body>
+	<div class="container">
+		<form class="wrapper" method="post">
+			<h2 class="title">URL-Shortener</h2>
+			<div class="input-group">
+				<input class="iput" type="url" name="link" id="link" required>
+				<label for="link">Enter URL</label>
+			</div>
+			<button class="iput shrt" id="shrt">Shorten</button>
+		</form>
+		{% if links %}
+		<ul class="wrapper li-w">
+			<h3 id="subtitle">Short Links</h3>
+			{% for link in links %}
+			<li>{{link}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</div>
+</body>
 </html>
